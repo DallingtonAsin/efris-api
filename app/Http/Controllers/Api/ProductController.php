@@ -18,9 +18,13 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+        try{
         $userData = $request->all();
         $user = $this->productService->create($userData);
         return response()->json($user);
+        }catch(\Exception $ex){
+            return response()->json(['error' => $ex->getMessage()]);
+        }
     }
 
     public function get($id)
@@ -40,5 +44,21 @@ class ProductController extends Controller
     {
         $user = $this->productService->delete($id);
         return response()->json($user);
+    }
+
+    public function increaseStock(){
+        try{
+            return response()->json(['success' => 'OK']);
+        }catch(\Exception $ex){
+            throw $ex;
+        }
+    }
+
+    public function decreaseStock(){
+        try{
+            return response()->json(['success' => 'OK']);
+        }catch(\Exception $ex){
+            throw $ex;
+        }
     }
 }

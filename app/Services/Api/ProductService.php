@@ -19,12 +19,14 @@ class ProductService
     public function create($productData)
     {
         try {
-            $response = $this->client->post('https://example.com/api/users', [
-                'form_params' => $productData
-            ]);
-            $data = json_decode($response->getBody()->getContents());
-            $this->productRepository->create($data);
-            
+            // $response = $this->client->post('https://example.com/api/users', [
+            //     'form_params' => $productData
+            // ]);
+            // $data = json_decode($response->getBody()->getContents());
+            // $this->productRepository->create($data);
+            $data = [
+                'success' => 'Ok'
+            ];
             return $data;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -34,8 +36,11 @@ class ProductService
     public function get($id)
     {
         try {
-            $response = $this->client->get('https://example.com/api/users/'.$id);
-            $data = json_decode($response->getBody()->getContents());
+            // $response = $this->client->get('https://example.com/api/users/'.$id);
+            // $data = json_decode($response->getBody()->getContents());
+            $data = [
+                'success' => 'Ok'
+            ];
             return $data;
         } catch (\Exception $e) {
             return $e->getMessage();
