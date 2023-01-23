@@ -22,7 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 // Goods and Services
 Route::get('/goods-and-services', [GoodsAndServiceController::class, 'get']);
 
@@ -37,3 +36,5 @@ Route::post('/issue-debt-note', [FinanceController::class, 'issueDebtNote']);
 
 // Invoice
 Route::post('/issue-invoice', [InvoiceController::class, 'issue']);
+
+Route::post('/register-good', [GoodsAndServiceController::class, 'registerProduct']);

@@ -25,4 +25,35 @@ class GoodsAndServiceController extends Controller
         }
     }
 
+    public function registerProduct(Request $request){
+        try{
+
+            $params = [[
+                "operationType" =>  "101",
+                "goodsName" => "apple",
+                "goodsCode" => "001",
+                "measureUnit" => "101",
+                "unitPrice" => "6999.99",
+                "currency" => "101",
+                "commodityCategoryId" => "10111301",
+                "haveExciseTax" => "102",
+                "description" => "1",
+                "stockPrewarning" => "10",
+                "pieceMeasureUnit" => "",
+                "havePieceUnit" => "102",
+                "pieceUnitPrice" => "",
+                "packageScaledValue" => "",
+                "pieceScaledValue" => "",
+                "exciseDutyCode" => "",
+                "haveOtherUnit" => "102"
+            ]];
+
+            $data = json_encode($params);
+            return $this->goodsService->register($data);
+
+        }catch(\Exception $ex){
+           return response()->json([$ex->getMessage()], 400);
+        }
+    }
+
 }
