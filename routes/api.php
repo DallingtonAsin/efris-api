@@ -37,4 +37,5 @@ Route::post('/issue-debt-note', [FinanceController::class, 'issueDebtNote']);
 // Invoice
 Route::post('/issue-invoice', [InvoiceController::class, 'issue']);
 
+Route::get('/goods', [GoodsAndServiceController::class, 'getRegistedProducts']);
 Route::post('/register-good', [GoodsAndServiceController::class, 'registerProduct']);

@@ -18,7 +18,48 @@ class GoodsAndServiceController extends Controller
 
     public function get(Request $request){
         try{
-            $goods = $this->goodsService->get();
+
+            $data = [
+                "goodsCode" => "",
+                "goodsName " => "apple",
+                "commodityCategoryName" => "",
+                "pageNo" => "10",
+                "pageSize" => "10",
+                "branchId" => "",
+                "serviceMark" => "",
+                "haveExciseTax" => "",
+                "startDate" => "",
+                "endDate" => "",
+                "combineKeywords" => "",
+                "goodsTypeCode" => ""
+            ];
+
+            $goods = $this->goodsService->get($data);
+            return response()->json($goods);
+        }catch(\Exception $ex){
+            return response()->json(['error' => $ex->getMessage()]);
+        }
+    }
+    
+
+    public function getRegistedProducts(){
+        try{
+            $data = [
+                "goodsCode" => "",
+                "goodsName " => "apple",
+                "commodityCategoryName" => "",
+                "pageNo" => "10",
+                "pageSize" => "10",
+                "branchId" => "",
+                "serviceMark" => "",
+                "haveExciseTax" => "",
+                "startDate" => "",
+                "endDate" => "",
+                "combineKeywords" => "",
+                "goodsTypeCode" => ""
+            ];
+
+            $goods = $this->goodsService->get($data);
             return response()->json($goods);
         }catch(\Exception $ex){
             return response()->json(['error' => $ex->getMessage()]);
@@ -30,10 +71,10 @@ class GoodsAndServiceController extends Controller
 
             $params = [[
                 "operationType" =>  "101",
-                "goodsName" => "apple",
-                "goodsCode" => "001",
+                "goodsName" => "orange",
+                "goodsCode" => "003",
                 "measureUnit" => "101",
-                "unitPrice" => "6999.99",
+                "unitPrice" => "5999.99",
                 "currency" => "101",
                 "commodityCategoryId" => "10111301",
                 "haveExciseTax" => "102",
@@ -48,8 +89,7 @@ class GoodsAndServiceController extends Controller
                 "haveOtherUnit" => "102"
             ]];
 
-            $data = json_encode($params);
-            return $this->goodsService->register($data);
+            return $this->goodsService->register($params);
 
         }catch(\Exception $ex){
            return response()->json([$ex->getMessage()], 400);
