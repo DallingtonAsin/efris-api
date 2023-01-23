@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\Api\GoodsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class GoodsAndServiceController extends Controller
 {
@@ -16,8 +18,9 @@ class GoodsAndServiceController extends Controller
         $this->goodsService = $goodsService;
     }
 
-    public function get(){
-        try{
+    public function get()
+    {
+        try {
 
             $data = [
                 "goodsCode" => "001",
@@ -40,64 +43,69 @@ class GoodsAndServiceController extends Controller
 
             $goods = $this->goodsService->get($data);
             return response()->json($goods);
-        }catch(\Exception $ex){
-            return response()->json(['error' => $ex->getMessage()]);
-        }
-    }
-    
-
-    public function getRegistedProducts(){
-        try{
-            $data = [
-                "goodsCode" => "",
-                "goodsName " => "apple",
-                "commodityCategoryName" => "",
-                "pageNo" => "10",
-                "pageSize" => "10",
-                "branchId" => "",
-                "serviceMark" => "",
-                "haveExciseTax" => "",
-                "startDate" => "",
-                "endDate" => "",
-                "combineKeywords" => "",
-                "goodsTypeCode" => ""
-            ];
-
-            $goods = $this->goodsService->get($data);
-            return response()->json($goods);
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             return response()->json(['error' => $ex->getMessage()]);
         }
     }
 
-    public function registerProduct(Request $request){
-        try{
 
-            $params = [[
-                "operationType" =>  "101",
-                "goodsName" => "orange",
-                "goodsCode" => "003",
-                "measureUnit" => "101",
-                "unitPrice" => "5999.99",
-                "currency" => "101",
-                "commodityCategoryId" => "10111301",
-                "haveExciseTax" => "102",
-                "description" => "1",
-                "stockPrewarning" => "10",
-                "pieceMeasureUnit" => "",
-                "havePieceUnit" => "102",
-                "pieceUnitPrice" => "",
-                "packageScaledValue" => "",
-                "pieceScaledValue" => "",
-                "exciseDutyCode" => "",
-                "haveOtherUnit" => "102"
-            ]];
+    public function registerProduct(Request $request)
+    {
 
-            return $this->goodsService->register($params);
+        $validator = Validator::make($request->all(), [
+            'goodsName' => 'required',
+            'goodsCode' => 'required',
+            'measureUnit' => 'required',
+            'unitPrice' => 'required',
+            'currency' => 'required',
+            'commodityCategoryId' => 'required',
+            'haveExciseTax' => 'required',
+            'havePieceUnit' => 'required',
+            'haveOtherUnit' => 'required'
+        ]);
 
-        }catch(\Exception $ex){
-           return response()->json([$ex->getMessage()], 400);
+        try {
+            if ($validator->fails()) {
+
+                $message = $validator->errors()->all();
+                return response()->json(['error' => $message]);
+
+            } else {
+
+                $goodsName = $request->input('goodsName');
+                $goodsCode = $request->input('goodsCode');
+                $measureUnit = $request->input('measureUnit');
+                $unitPrice = $request->input('unitPrice');
+                $currency = $request->input('currency');
+                $commodityCategoryId = $request->input('commodityCategoryId');
+                $haveExciseTax = $request->input('haveExciseTax');
+                $havePieceUnit = $request->input('havePieceUnit');
+                $haveOtherUnit = $request->input('haveOtherUnit');
+
+                $params = [[
+                    "operationType" =>  "101",
+                    "goodsName" => $goodsName,
+                    "goodsCode" =>  $goodsCode,
+                    "measureUnit" => $measureUnit,
+                    "unitPrice" => $unitPrice,
+                    "currency" => $currency,
+                    "commodityCategoryId" => $commodityCategoryId,
+                    "haveExciseTax" => $haveExciseTax,
+                    "description" => "1",
+                    "stockPrewarning" => "10",
+                    "pieceMeasureUnit" => "",
+                    "havePieceUnit" => $havePieceUnit,
+                    "pieceUnitPrice" => "",
+                    "packageScaledValue" => "",
+                    "pieceScaledValue" => "",
+                    "exciseDutyCode" => "",
+                    "haveOtherUnit" => $haveOtherUnit
+                ]];
+
+                return $this->goodsService->register($params);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([$ex->getMessage()], 400);
         }
     }
-
 }
