@@ -66,6 +66,7 @@ class StockController extends Controller
                     "goodsStockInItem" => [$goodsInStockItem]
                 ];
 
+                // return response()->json($data, 200);
                 return $this->stockService->create($data);
             }
         } catch (\Exception $ex) {
