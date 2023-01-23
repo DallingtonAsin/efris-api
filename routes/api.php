@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\GoodsAndServiceController;
 use App\Http\Controllers\Api\FinanceController;
 use App\Http\Controllers\Api\InvoiceController;
@@ -26,9 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/goods-and-services', [GoodsAndServiceController::class, 'get']);
 
 // Products
-Route::post('/register-product', [ProductController::class, 'create']);
-Route::post('/increase-stock', [ProductController::class, 'increaseStock']);
-Route::post('/decrease-stock', [ProductController::class, 'decreaseStock']);
+Route::post('/add-stock', [StockController::class, 'increaseStock']);
+Route::post('/increase-stock', [StockController::class, 'increaseStock']);
+Route::post('/decrease-stock', [StockController::class, 'decreaseStock']);
 
 // Notes
 Route::post('/issue-credit-note', [FinanceController::class, 'issueCreditNote']);

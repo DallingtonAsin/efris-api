@@ -16,22 +16,26 @@ class GoodsAndServiceController extends Controller
         $this->goodsService = $goodsService;
     }
 
-    public function get(Request $request){
+    public function get(){
         try{
 
             $data = [
-                "goodsCode" => "",
-                "goodsName " => "apple",
-                "commodityCategoryName" => "",
+                "goodsCode" => "001",
                 "pageNo" => "10",
                 "pageSize" => "10",
-                "branchId" => "",
-                "serviceMark" => "",
-                "haveExciseTax" => "",
-                "startDate" => "",
-                "endDate" => "",
-                "combineKeywords" => "",
-                "goodsTypeCode" => ""
+
+                // "goodsCode" => "",
+                // "goodsName " => "",
+                // "commodityCategoryName" => "",
+                // "pageNo" => "10",
+                // "pageSize" => "10",
+                // "branchId" => "",
+                // "serviceMark" => "",
+                // "haveExciseTax" => "",
+                // "startDate" => "",
+                // "endDate" => "",
+                // "combineKeywords" => "",
+                // "goodsTypeCode" => ""
             ];
 
             $goods = $this->goodsService->get($data);

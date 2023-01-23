@@ -3,31 +3,31 @@
 namespace App\Services\Api;
 
 use GuzzleHttp\Client;
+use App\Services\Api\ApiService;
 use App\Repositories\Api\ProductRepository;
 
-class ProductService
+class StockService
 {
     protected $client;
     protected $productRepository;
+    protected $apiService;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, ApiService $apiService)
     {
         $this->client = new Client();
         $this->productRepository = $productRepository;
+        $this->apiService = $apiService;
     }
 
-    public function create($productData)
+    public function create($stockData)
     {
         try {
-            // $response = $this->client->post('https://example.com/api/users', [
-            //     'form_params' => $productData
-            // ]);
-            // $data = json_decode($response->getBody()->getContents());
-            // $this->productRepository->create($data);
-            $data = [
-                'success' => 'Ok'
-            ];
-            return $data;
+            $request_data = json_encode($stockData);
+            $encypted_data = base64_encode($request_data);
+
+            $requestBody = $this->apiService->getRequestBody($encypted_data, "T131");
+            return $this->apiService->post($requestBody);
+
         } catch (\Exception $e) {
             return $e->getMessage();
         }
