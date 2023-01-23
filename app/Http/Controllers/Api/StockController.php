@@ -19,6 +19,14 @@ class StockController extends Controller
         $this->stockRequestData = new StockRequestData();
     }
 
+    public function getStockRecords(){
+        try{
+           return $this->stockService->queryStockRecords();
+        }  catch (\Exception $ex) {
+            return response()->json(['error' => $ex->getMessage()]);
+        }
+    }
+
     public function create(Request $request)
     {
         try {
@@ -66,7 +74,7 @@ class StockController extends Controller
                     "goodsStockInItem" => [$goodsInStockItem]
                 ];
 
-                // return response()->json($data, 200);
+                return response()->json($data, 200);
                 return $this->stockService->create($data);
             }
         } catch (\Exception $ex) {

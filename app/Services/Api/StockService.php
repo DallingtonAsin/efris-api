@@ -33,11 +33,36 @@ class StockService
         }
     }
 
+
+    public function queryStockRecords()
+    {
+        try {
+
+            $query_data = [
+                "productionBatchNo" => "",
+                "invoiceNo" => "",
+                "referenceNo" => "425502528294126235",
+                "pageNo" => "1",
+                "pageSize" => "10"
+            ];
+
+            $request_data = json_encode($query_data);
+            $encypted_data = base64_encode($request_data);
+
+            $requestBody = $this->apiService->getRequestBody($encypted_data, "T145");
+            return $this->apiService->post($requestBody);
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+
+
+
     public function get($id)
     {
         try {
-            // $response = $this->client->get('https://example.com/api/users/'.$id);
-            // $data = json_decode($response->getBody()->getContents());
             $data = [
                 'success' => 'Ok'
             ];

@@ -29,6 +29,8 @@ Route::get('/goods-and-services', [GoodsAndServiceController::class, 'get']);
 Route::post('/add-stock', [StockController::class, 'addStock']);
 Route::post('/increase-stock', [StockController::class, 'addStock']);
 Route::post('/decrease-stock', [StockController::class, 'decreaseStock']);
+Route::get('/stock-records', [StockController::class, 'getStockRecords']);
+
 
 // Notes
 Route::post('/issue-credit-note', [FinanceController::class, 'issueCreditNote']);
