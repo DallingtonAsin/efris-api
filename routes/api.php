@@ -26,8 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/goods-and-services', [GoodsAndServiceController::class, 'get']);
 
 // Products
-Route::post('/add-stock', [StockController::class, 'increaseStock']);
-Route::post('/increase-stock', [StockController::class, 'increaseStock']);
+Route::post('/add-stock', [StockController::class, 'addStock']);
+Route::post('/increase-stock', [StockController::class, 'addStock']);
 Route::post('/decrease-stock', [StockController::class, 'decreaseStock']);
 
 // Notes

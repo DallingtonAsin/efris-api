@@ -29,7 +29,7 @@ class StockController extends Controller
         }
     }
 
-    public function increaseStock(Request $request)
+    public function addStock(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -77,6 +77,7 @@ class StockController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'goodsCode' => 'required',
+            'goodsTypeCode' => 'sometimes|nullable',
             'quantity' => 'required',
             'adjustType' => 'required',
             'remarks' => 'sometimes|nullable',
@@ -95,7 +96,7 @@ class StockController extends Controller
                 $adjustType = $request->input('adjustType');
                 $remarks = $request->input('remarks');
 
-                $stockIn = $this->getDecreaseStockInObj('102', $goodsTypeCode, '', '', '',  $remarks,  $adjustType);
+                $stockIn = $this->getDecreaseStockInObj($adjustType, $goodsTypeCode, $remarks);
                 $goodsInStockItem = $this->getGoodsInStockItemObj($goodsCode, $quantity, $unitPrice, $remarks);
 
                 $data = [
@@ -137,7 +138,7 @@ class StockController extends Controller
         }
     }
 
-    private function getDecreaseStockInObj($goodsTypeCode, $adjustType, $remarks = null)
+    private function getDecreaseStockInObj($adjustType, $goodsTypeCode, $remarks = null)
     {
         try {
 
@@ -155,7 +156,7 @@ class StockController extends Controller
                 "invoiceNo" => "",
                 "isCheckBatchNo" => "0",
                 "rollBackIfError" => "0",
-                "goodsTypeCode" => $goodsTypeCode
+                "goodsTypeCode" => ""
             ];
 
             return $stockIn;
