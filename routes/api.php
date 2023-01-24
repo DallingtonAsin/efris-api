@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\GoodsAndServiceController;
 use App\Http\Controllers\Api\FinanceController;
 use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\Api\CommodityCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Goods and Services
 Route::get('/goods-and-services', [GoodsAndServiceController::class, 'get']);
 
+
+// Goods
+Route::get('/goods', [GoodsAndServiceController::class, 'getRegistedProducts']);
+Route::post('/register-good', [GoodsAndServiceController::class, 'registerProduct']);
+
+
 // Products
 Route::post('/add-stock', [StockController::class, 'addStock']);
 Route::post('/increase-stock', [StockController::class, 'addStock']);
@@ -32,12 +39,15 @@ Route::post('/decrease-stock', [StockController::class, 'decreaseStock']);
 Route::get('/stock-records', [StockController::class, 'getStockRecords']);
 
 
+// Commodity Categories
+Route::get('/commodity-categories', [CommodityCategoryController::class, 'index']);
+
+
 // Notes
 Route::post('/issue-credit-note', [FinanceController::class, 'issueCreditNote']);
 Route::post('/issue-debt-note', [FinanceController::class, 'issueDebtNote']);
 
+
 // Invoice
 Route::post('/issue-invoice', [InvoiceController::class, 'issue']);
 
-Route::get('/goods', [GoodsAndServiceController::class, 'getRegistedProducts']);
-Route::post('/register-good', [GoodsAndServiceController::class, 'registerProduct']);
