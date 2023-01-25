@@ -20,7 +20,7 @@ class InvoiceController extends Controller
             $this->invoiceService->issueInvoice();
             return response()->json(['success' => 'OK']);
         }catch(\Exception $ex){
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 }

@@ -44,7 +44,7 @@ class GoodsAndServiceController extends Controller
             $goods = $this->goodsService->get($data);
             return response()->json($goods);
         } catch (\Exception $ex) {
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 
@@ -59,6 +59,7 @@ class GoodsAndServiceController extends Controller
             'unitPrice' => 'required',
             'currency' => 'required',
             'commodityCategoryId' => 'required',
+            'stockPrewarning' => 'required',
             'haveExciseTax' => 'required',
             'havePieceUnit' => 'required',
             'haveOtherUnit' => 'required'
@@ -68,7 +69,7 @@ class GoodsAndServiceController extends Controller
             if ($validator->fails()) {
 
                 $message = $validator->errors()->all();
-                return response()->json(['error' => $message]);
+                return response()->json(['error' => $message], 400);
 
             } else {
 
@@ -78,6 +79,7 @@ class GoodsAndServiceController extends Controller
                 $unitPrice = $request->input('unitPrice');
                 $currency = $request->input('currency');
                 $commodityCategoryId = $request->input('commodityCategoryId');
+                $stockPrewarning = $request->input('stockPrewarning');
                 $haveExciseTax = $request->input('haveExciseTax');
                 $havePieceUnit = $request->input('havePieceUnit');
                 $haveOtherUnit = $request->input('haveOtherUnit');
@@ -92,7 +94,7 @@ class GoodsAndServiceController extends Controller
                     "commodityCategoryId" => $commodityCategoryId,
                     "haveExciseTax" => $haveExciseTax,
                     "description" => "1",
-                    "stockPrewarning" => "10",
+                    "stockPrewarning" => $stockPrewarning,
                     "pieceMeasureUnit" => "",
                     "havePieceUnit" => $havePieceUnit,
                     "pieceUnitPrice" => "",

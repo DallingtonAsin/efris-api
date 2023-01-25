@@ -23,7 +23,7 @@ class StockController extends Controller
         try{
            return $this->stockService->queryStockRecords();
         }  catch (\Exception $ex) {
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 
@@ -33,7 +33,7 @@ class StockController extends Controller
             $data = $this->getRequestData('101', '001', 'increase stock');
             return $this->stockService->create($data);
         } catch (\Exception $ex) {
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 
@@ -54,7 +54,7 @@ class StockController extends Controller
         try {
             if ($validator->fails()) {
                 $message = $validator->errors()->all();
-                return response()->json(['error' => $message]);
+                return response()->json(['error' => $message], 400);
             } else {
 
                 $goodsCode = $request->input('goodsCode');
@@ -78,7 +78,7 @@ class StockController extends Controller
                 return $this->stockService->create($data);
             }
         } catch (\Exception $ex) {
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 
@@ -95,7 +95,7 @@ class StockController extends Controller
         try {
             if ($validator->fails()) {
                 $message = $validator->errors()->all();
-                return response()->json(['error' => $message]);
+                return response()->json(['error' => $message], 400);
             } else {
 
                 $goodsCode = $request->input('goodsCode');
@@ -116,7 +116,7 @@ class StockController extends Controller
                 return $this->stockService->create($data);
             }
         } catch (\Exception $ex) {
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 

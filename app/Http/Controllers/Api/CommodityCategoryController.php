@@ -19,7 +19,7 @@ class CommodityCategoryController extends Controller
         try{
            return $this->commodityCategoryService->get();
         }catch(\Exception $ex){
-             return response()->json(['error' => $ex->getMessage()]);
+             return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 }

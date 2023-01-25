@@ -5,6 +5,7 @@ namespace App\Services\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Carbon\Carbon;
+use Error;
 
 class ApiService
 {
@@ -21,11 +22,7 @@ class ApiService
     {
         try {
             $response = $this->client->get($this->url);
-            if ($response->getStatusCode() == 200) {
-                return json_decode($response->getBody()->getContents());
-            } else {
-                return (string) $response->getBody() || $response->getReasonPhrase();
-            }
+            return $this->getApiResponse($response);
         } catch (\Exception $ex) {
             throw $ex;
         }
@@ -42,12 +39,27 @@ class ApiService
                     $options['headers']['Pre-Request-Script'] = "<script>console.log('current time: $current_time');</script>";
                 }
             ]);
+            return $this->getApiResponse($response);
+          
+        } catch (\Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    private function getApiResponse($response){
+        try{
             if ($response->getStatusCode() == 200) {
-                return json_decode($response->getBody()->getContents());
+                $result = json_decode($response->getBody()->getContents());
+            
+                if($result->returnStateInfo->returnCode == '00'){
+                    return $result;
+                }else{
+                   return response()->json(['message' => $result->returnStateInfo->returnMessage], 400);
+                }
             } else {
                 return (string) $response->getBody() || $response->getReasonPhrase();
             }
-        } catch (\Exception $ex) {
+        }catch(\Exception $ex){
             throw $ex;
         }
     }

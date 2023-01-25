@@ -20,7 +20,7 @@ class FinanceController extends Controller
             $this->invoiceService->issueCreditNote();
             return response()->json(['success' => 'OK']);
         }catch(\Exception $ex){
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 
@@ -30,7 +30,7 @@ class FinanceController extends Controller
             $this->invoiceService->issueDebtNote();
             return response()->json(['success' => 'OK']);
         }catch(\Exception $ex){
-            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => $ex->getMessage()], 400);
         }
     }
 }
