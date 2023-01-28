@@ -3,22 +3,28 @@
 namespace App\Services\Api;
 
 use GuzzleHttp\Client;
+use App\Services\Api\ApiService;
 
 class InvoiceService
 {
-    protected $client;
+    protected $client, $apiService;
 
-    public function __construct()
+    public function __construct(ApiService $apiService)
     {
         $this->client = new Client();
+        $this->apiService = $apiService;
     }
 
-    public function issueInvoice()
+    public function issueInvoice($data)
     {
         try {
-            $response = $this->client->get('https://example.com/api/users/');
-            $data = json_decode($response->getBody()->getContents());
-            return $data;
+
+            $json_data = json_encode($data);
+            // return $data;
+            $encypted_data = base64_encode($json_data);
+            $requestBody = $this->apiService->getRequestBody($encypted_data, "T109");
+
+            return $this->apiService->post($requestBody);
         } catch (\Exception $e) {
             return $e->getMessage();
         }

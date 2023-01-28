@@ -57,7 +57,7 @@ class ApiService
                    return response()->json(['message' => $result->returnStateInfo->returnMessage], 400);
                 }
             } else {
-                return (string) $response->getBody() || $response->getReasonPhrase();
+                return response()->json(['message' => (string) $response->getBody() || $response->getReasonPhrase()], 400);
             }
         }catch(\Exception $ex){
             throw $ex;
